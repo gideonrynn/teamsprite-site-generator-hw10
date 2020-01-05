@@ -1,5 +1,5 @@
 # teamsprite-site-generator-hw10
-This is a Git Hub repository for the NU Coding Bootcamp Homework for Week 10 team site generator.
+This is a Git Hub repository for the NU Coding Bootcamp Team Site Generator Homework for Week 10.
 
 ![profile pdf screenshot](/assets/images/teamsprite.jpg)
 ![node js run gif](/assets/images/teamsprite.gif)
@@ -12,25 +12,25 @@ Once logged in with [GitHub account](https://github.login/), clone the repo loca
   git clone https://github.com/gideonrynn/teampacr-profile-generator-hw7.git
 ```
 
-Also see: [Cloning a respository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
+Also see: [Cloning a repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
 
 # Usage
 
-The Team Sprite application allows a user to generate a github profile in PDF format based on prompts and stored user inputs using the command-line.
+The Team Sprite application allows a user to generate a webpage that displays information regarding members of a team based on prompts and stored user inputs using the command-line.
 
-A project manager or developer lead can use the application to generate team profiles quickly for documentation that will go to stakeholders or department heads without having to navigate to external profiles provided by each team member. The user will also be able to choose a color that closest matches a project theme - developers may update generateHTML to update colors for company/department branding palette or additional tailoring.
+A project manager, department head or developer lead can use the application to generate basic team details quickly for a website that can be referenced by stakeholders or boards without having to navigate to external profiles provided by each team member. 
 
-When the command line prompts are complete, pdf will save to "profiles" folder with github username in filename.
+***The user will also be able to choose a color that closest matches a project theme - developers may update generateHTML to update colors for company/department branding palette or additional tailoring.***
 
-The generated template will include:
-- public repository name
-- followers
-- GitHub stars
-- GitHub follow count
-- location (link to Google maps)
-- blog (link to website)
-- GitHub Profile (link to website)
+When the command line prompts are complete, a team.html page will save to "output" folder.
+
+The generated page will include the members of the team and:
+- name
+- title
+- id
+- role (manager, intern, engineer)
+- depending on the role, github username, school, or office number
 
 # Technologies
 
