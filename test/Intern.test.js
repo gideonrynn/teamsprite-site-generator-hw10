@@ -4,7 +4,7 @@
 // 2. Create or update classes to pass a single test case
 // 3. Repeat
 
-const Intern = require("../lib/Intern");
+const Intern = require("../lib/class_intern");
 
 test("Can set school via constructor", () => {
   const testValue = "UCLA";

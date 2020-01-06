@@ -4,8 +4,8 @@
 // 2. Create or update classes to pass a single test case
 // 3. Repeat
 
-const Manager = require("../lib/Manager");
-const Employee = require("../lib/Employee");
+const Manager = require("../lib/class_manager");
+const Employee = require("../lib/class_employee");
 
 test("Can set office number via constructor argument", () => {
   const testValue = 100;

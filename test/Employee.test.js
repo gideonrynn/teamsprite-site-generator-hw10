@@ -4,7 +4,7 @@
 // 2. Create or update classes to pass a single test case
 // 3. Repeat
 
-const Employee = require("../lib/Employee");
+const Employee = require("../lib/class_employee");
 
 test("Can instantiate Employee instance", () => {
   const e = new Employee();

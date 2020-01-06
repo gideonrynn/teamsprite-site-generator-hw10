@@ -4,7 +4,7 @@
 // 2. Create or update classes to pass a single test case
 // 3. Repeat
 
-const Engineer = require("../lib/Engineer");
+const Engineer = require("../lib/class_engineer");
 
 test("Can set GitHUb account via constructor", () => {
   const testValue = "GitHubUser";
