@@ -30,6 +30,8 @@ let arrayHTML = [];
 //array of html that will be written to the final output team_index.html
 let arrayHTMLFinal = [];
 
+let arrayHTMLFinalTemplate = [];
+
 
 function initiate() {
 
@@ -114,9 +116,6 @@ function initiate() {
               //push updated html into array final that will hold all updated html data
               arrayHTMLFinal.push(arrayHTML);
 
-              //write full array of data to team page
-              writeFile();
-
             // end read file
             });
 
@@ -148,9 +147,6 @@ function initiate() {
               //push updated html into array that will hold all updated html data
               arrayHTMLFinal.push(arrayHTML);
 
-              //write full array of data to team page
-              writeFile();
-
             // end read file
             });
 
@@ -179,24 +175,24 @@ function initiate() {
 
               //return the HTML with the placeholders replaced by newEngineer data
               arrayHTML = arrayHTML.map(arrayHTML => {
-                return arrayHTML.replace(/{{ id }}/g, newEngineer["id"]).replace(/{{ email }}/g, newEngineer["email"]).replace(/{{ school }}/g, newEngineer["username"]).replace(/{{ name }}/g, newEngineer["name"]).replace(/{{ type }}/g, newEngineer.getRole());
+                return arrayHTML.replace(/{{ id }}/g, newEngineer["id"]).replace(/{{ email }}/g, newEngineer["email"]).replace(/{{ username }}/g, newEngineer["github"]).replace(/{{ name }}/g, newEngineer["name"]).replace(/{{ type }}/g, newEngineer.getRole());
                 
               });
 
               //push updated html into array final that will hold all updated html data
               arrayHTMLFinal.push(arrayHTML);
-              
-              writeFile();
-
+            
             });
 
-          }
+          } 
+          
+          if (data.yesorno === false) {
 
-          if (data.yesorno == true) {
-
-            initiate();
+            writeFile();
 
           } else {
+
+            initiate();
 
           }
       
@@ -206,26 +202,36 @@ function initiate() {
 }
 
 function writeFile() {
-  // write to new file in output folder
-  fs.appendFile("./output/team_index.html", arrayHTMLFinal, function(err) {
-  
-    if (err) {
-      return console.log(err);
-    }
-  
-    console.log("Success!");
-  
-    });
-  }
 
-  function update () {
+    //read contents the html file
+    fs.readFile("./templates/template_index.html", "utf8", function(err, data) {
+              
+      if (err) {
+        throw err;
+      }
 
-    arrayHTML += arrayHTML.map(arrayHTML => {
-      return arrayHTML.replace(/{{ id }}/g, newIntern["id"]).replace(/{{ email }}/g, newIntern["email"]).replace(/{{ school }}/g, newIntern["school"]).replace(/{{ name }}/g, newIntern["name"]).replace(/{{ type }}/g, newIntern.getRole());
+      arrayHTMLFinalTemplate.push(data);
+
+      //return the HTML with the placeholders replaced by newEngineer data
+      arrayHTMLFinalTemplate = arrayHTMLFinalTemplate.map(arrayHTMLFinalTemplate => {
+        return arrayHTMLFinalTemplate.replace(/{{ newteam }}/g, arrayHTMLFinal);
+      });
+
+      arrayHTMLFinalTemplate = arrayHTMLFinalTemplate.join("");
+
+      // write to new file in output folder
+      fs.writeFile("./output/team_index.html", arrayHTMLFinalTemplate, function(err) {
       
+        if (err) {
+          return console.log(err);
+        }
+      
+        console.log("Success!");
+      
+        });
+
     });
-    
-    // console.log(arrayHTML);
+
   }
 
 //run when app is initialized
