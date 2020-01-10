@@ -22,13 +22,13 @@ const engineer = require("./lib/class_engineer");
 const intern = require("./lib/class_intern");
 
 //array of data that will be input into arrayHTML
-const arrayAnswers = [];
+let arrayAnswers = [];
 
 //array of html that will be created from inputs and collect inputs
-const arrayHTML = [];
+let arrayHTML = [];
 
 //array of html that will be written to the final output team_index.html
-const arrayHTMLFinal = [];
+let arrayHTMLFinal = [];
 
 
 function initiate() {
@@ -86,29 +86,35 @@ function initiate() {
         .then(function(data) {
 
           // console.log(data);
-
-          console.log(data.type);
+          // console.log(data.type);
 
           if (data.type === 'manager') {
 
             //create new manager with manager class
             const newManager = new manager(data.name, data.id, data.email, data.officenumber);
+            
+            //push newManager to answers array
+            arrayAnswers.push(newManager);
+
+            arrayHTML = [];
 
             //read contents the html file
             fs.readFile("./templates/template_manager.html", "utf8", function(err, data) {
+              if (err) { throw err;}
 
-              if (err) {
-                throw err;
-              }
-
-              arrayAnswers.push(newManager);
+              //push the information pulled from the template into an array of HTML data
               arrayHTML.push(data);
-            
-              // console.log(data);
-              //push HTML to array
-              // console.log(arrayHTML);
-              console.log(arrayAnswers);
 
+              //return the HTML with the placeholders replaced by newManager data
+              arrayHTML = arrayHTML.map(arrayHTML => {
+                return arrayHTML.replace(/{{ id }}/g, newManager["id"]).replace(/{{ email }}/g, newManager["email"]).replace(/{{ officenumber }}/g, newManager["officeNumber"]).replace(/{{ name }}/g, newManager["name"]).replace(/{{ type }}/g, newManager.getRole());
+                
+              });
+
+              //push updated html into array final that will hold all updated html data
+              arrayHTMLFinal.push(arrayHTML);
+
+              //write full array of data to team page
               writeFile();
 
             // end read file
@@ -122,19 +128,27 @@ function initiate() {
             //create new intern with intern class
             const newIntern = new intern(data.name, data.id, data.email, data.school);
 
+            arrayAnswers.push(newIntern);
+
+            arrayHTML = [];
+
             //read contents the html file
-            fs.readFile("./templates/template_intern.html", "utf8", function(err, data) {
+            fs.readFile("./templates/template_intern.html", "utf8", function(err, data) {    
+              if (err) { throw err; }
               
-              if (err) {
-                throw err;
-              }
-              
-              // console.log(data);
-              //push HTML to array
+              //push the information pulled from the template into an array of HTML data
               arrayHTML.push(data);
 
-              console.log(arrayHTML);
+              //return the HTML with the placeholders replaced by newIntern data
+              arrayHTML = arrayHTML.map(arrayHTML => {
+                return arrayHTML.replace(/{{ id }}/g, newIntern["id"]).replace(/{{ email }}/g, newIntern["email"]).replace(/{{ school }}/g, newIntern["school"]).replace(/{{ name }}/g, newIntern["name"]).replace(/{{ type }}/g, newIntern.getRole());
+                
+              });
 
+              //push updated html into array that will hold all updated html data
+              arrayHTMLFinal.push(arrayHTML);
+
+              //write full array of data to team page
               writeFile();
 
             // end read file
@@ -145,8 +159,13 @@ function initiate() {
 
           if (data.type === 'engineer') {
            
-            //create new engingeer with engineer class
-            const newEngineer = new engineer(data.name, data.id, data.email, data.github);
+            //create new engineer with engineer class
+            const newEngineer = new engineer(data.name, data.id, data.email, data.username);
+
+            //push newEngineer to answers array
+            arrayAnswers.push(newEngineer);
+            
+            arrayHTML = [];
 
             //read contents the html file
             fs.readFile("./templates/template_engineer.html", "utf8", function(err, data) {
@@ -155,10 +174,17 @@ function initiate() {
                 throw err;
               }
               
-              // console.log(data);
-              //push HTML to array
+              //push the information pulled from the template into an array of HTML data
               arrayHTML.push(data);
-              console.log(arrayHTML);
+
+              //return the HTML with the placeholders replaced by newEngineer data
+              arrayHTML = arrayHTML.map(arrayHTML => {
+                return arrayHTML.replace(/{{ id }}/g, newEngineer["id"]).replace(/{{ email }}/g, newEngineer["email"]).replace(/{{ school }}/g, newEngineer["username"]).replace(/{{ name }}/g, newEngineer["name"]).replace(/{{ type }}/g, newEngineer.getRole());
+                
+              });
+
+              //push updated html into array final that will hold all updated html data
+              arrayHTMLFinal.push(arrayHTML);
               
               writeFile();
 
@@ -170,7 +196,9 @@ function initiate() {
 
             initiate();
 
-          } 
+          } else {
+
+          }
       
     //end inquirer
      }); 
@@ -179,7 +207,7 @@ function initiate() {
 
 function writeFile() {
   // write to new file in output folder
-  fs.appendFile("./output/team_index.html", arrayHTML, function(err) {
+  fs.appendFile("./output/team_index.html", arrayHTMLFinal, function(err) {
   
     if (err) {
       return console.log(err);
@@ -188,6 +216,16 @@ function writeFile() {
     console.log("Success!");
   
     });
+  }
+
+  function update () {
+
+    arrayHTML += arrayHTML.map(arrayHTML => {
+      return arrayHTML.replace(/{{ id }}/g, newIntern["id"]).replace(/{{ email }}/g, newIntern["email"]).replace(/{{ school }}/g, newIntern["school"]).replace(/{{ name }}/g, newIntern["name"]).replace(/{{ type }}/g, newIntern.getRole());
+      
+    });
+    
+    // console.log(arrayHTML);
   }
 
 //run when app is initialized

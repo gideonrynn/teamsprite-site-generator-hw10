@@ -1,6 +1,3 @@
-<!-- * In your HTML template files, you may want to add a placeholder character that helps your program identify where the dynamic markup begins and ends. -->
-
-
 <!-- Start Intern Card -->
     
     <!-- col class col-md-6 col-sm-12 my-1 -->
@@ -12,24 +9,24 @@
 
             <div class="card-header">
                 <!-- <h4>Name</h4> -->
-                <h4>Senia</h4>
+                <h4> {{ name }} </h4>
 
                 <!-- <h5>Role</h5> -->
-                <h5>Intern</h5>
+                <h5> {{ type }}</h5>
             </div>
 
             <!-- <img src="..." class="card-img-top" alt="..."> -->
 
             <div class="card-body">
 
-                <!-- <h5 class="card-title">Engineer</h5> -->
+                <!-- <h5 class="card-title">Intern</h5> -->
 
                 <!-- <p class="card-text">Draft text</p> -->
 
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: Number</li>
-                    <li class="list-group-item">Email: Email address</li>
-                    <li class="list-group-item">School: School name</li>
+                    <li class="list-group-item">ID: {{ id }}</li>
+                    <li class="list-group-item">Email: {{ email }} </li>
+                    <li class="list-group-item">School: {{ school }}</li>
                 </ul>
 
             </div>
