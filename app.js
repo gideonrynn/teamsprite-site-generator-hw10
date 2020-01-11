@@ -1,19 +1,3 @@
-//app.js runs the application
-//lib contains the classes for each type
-//template contains the html templates for each type
-//output is where the rendered file(s)
-
-// ### User input
-// The project must prompt the user to build an engineering team. An engineering
-// team consists of a manager, and any number of engineers and interns.
-
-// The project must generate a `team.html` page in the `output` directory, that displays a nicely formatted team roster. Each team member should display the following in no particular order:
-//   * Name
-//   * Role
-//   * ID
-//   * Role-specific property (School, link to GitHub profile, or office number)
-
-
 const inquirer = require("inquirer");
 const fs = require("fs");
 const employee = require("./lib/class_employee");
@@ -34,8 +18,6 @@ let arrayHTMLFinalTemplate = [];
 
 
 function initiate() {
-
-    console.log(`Follow the prompts below to build your team and page.`);
 
     inquirer.prompt([
       {
@@ -104,7 +86,7 @@ function initiate() {
             fs.readFile("./templates/template_manager.html", "utf8", function(err, data) {
               if (err) { throw err;}
 
-              //push the information pulled from the template into an array of HTML data
+              //push the html pulled from the template into an array 
               arrayHTML.push(data);
 
               //return the HTML with the placeholders replaced by newManager data
@@ -140,7 +122,7 @@ function initiate() {
 
               //return the HTML with the placeholders replaced by newIntern data
               arrayHTML = arrayHTML.map(arrayHTML => {
-                return arrayHTML.replace(/{{ id }}/g, newIntern["id"]).replace(/{{ email }}/g, newIntern["email"]).replace(/{{ school }}/g, newIntern["school"]).replace(/{{ name }}/g, newIntern["name"]).replace(/{{ type }}/g, newIntern.getRole());
+                return arrayHTML.replace(/{{ id }}/g, newIntern["id"]).replace(/{{ email }}/g, newIntern["email"]).replace(/{{ school }}/g, newIntern.getSchool()).replace(/{{ name }}/g, newIntern["name"]).replace(/{{ type }}/g, newIntern.getRole());
                 
               });
 
@@ -175,7 +157,7 @@ function initiate() {
 
               //return the HTML with the placeholders replaced by newEngineer data
               arrayHTML = arrayHTML.map(arrayHTML => {
-                return arrayHTML.replace(/{{ id }}/g, newEngineer["id"]).replace(/{{ email }}/g, newEngineer["email"]).replace(/{{ username }}/g, newEngineer["github"]).replace(/{{ name }}/g, newEngineer["name"]).replace(/{{ type }}/g, newEngineer.getRole());
+                return arrayHTML.replace(/{{ id }}/g, newEngineer["id"]).replace(/{{ email }}/g, newEngineer["email"]).replace(/{{ username }}/g, newEngineer.getGithub()).replace(/{{ name }}/g, newEngineer["name"]).replace(/{{ type }}/g, newEngineer.getRole());
                 
               });
 
@@ -188,7 +170,7 @@ function initiate() {
           
           if (data.yesorno === false) {
 
-            writeFile();
+            createTeamPage();
 
           } else {
 
@@ -201,8 +183,8 @@ function initiate() {
 
 }
 
-function writeFile() {
-
+function createTeamPage() {
+      
     //read contents the html file
     fs.readFile("./templates/template_index.html", "utf8", function(err, data) {
               
@@ -212,12 +194,12 @@ function writeFile() {
 
       arrayHTMLFinalTemplate.push(data);
 
+      arrayHTMLFinal = arrayHTMLFinal.join('');
+
       //return the HTML with the placeholders replaced by newEngineer data
       arrayHTMLFinalTemplate = arrayHTMLFinalTemplate.map(arrayHTMLFinalTemplate => {
         return arrayHTMLFinalTemplate.replace(/{{ newteam }}/g, arrayHTMLFinal);
       });
-
-      arrayHTMLFinalTemplate = arrayHTMLFinalTemplate.join("");
 
       // write to new file in output folder
       fs.writeFile("./output/team_index.html", arrayHTMLFinalTemplate, function(err) {
@@ -226,7 +208,7 @@ function writeFile() {
           return console.log(err);
         }
       
-        console.log("Success!");
+        console.log("Your team page has been created!");
       
         });
 
@@ -234,5 +216,6 @@ function writeFile() {
 
   }
 
+  console.log(`Follow the prompts below to build your team and page.`);
 //run when app is initialized
 initiate();
