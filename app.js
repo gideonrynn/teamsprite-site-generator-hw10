@@ -5,18 +5,20 @@ const manager = require("./lib/class_manager");
 const engineer = require("./lib/class_engineer");
 const intern = require("./lib/class_intern");
 
-//array of data that will be input into arrayHTML
+//array of input data that will be input into arrayHTML
 let arrayAnswers = [];
 
-//array of html that will be created from inputs and collect inputs
+//array containing html template that will be updated from inputs
 let arrayHTML = [];
 
-//array of html that will be written to the final output team_index.html
+//array of stored and updated html templates that will be written to the final output team_index.html
+let arrayHTMLTeam = [];
+
+//array containing final html template that will be updated with stored arrayHTMLFinal and pushed to team page
 let arrayHTMLFinal = [];
 
-let arrayHTMLFinalTemplate = [];
 
-
+//function runs with node app.js that will prompt users for team info, generate answer and html arrays from html templates
 function initiate() {
 
     inquirer.prompt([
@@ -66,11 +68,9 @@ function initiate() {
       }
     ])
 
-        //then with the username and color returned from the user's input...
+
         .then(function(data) {
 
-          // console.log(data);
-          // console.log(data.type);
 
           if (data.type === 'manager') {
 
@@ -82,7 +82,7 @@ function initiate() {
 
             arrayHTML = [];
 
-            //read contents the html file
+            //read contents of the html file
             fs.readFile("./templates/template_manager.html", "utf8", function(err, data) {
               if (err) { throw err;}
 
@@ -96,7 +96,7 @@ function initiate() {
               });
 
               //push updated html into array final that will hold all updated html data
-              arrayHTMLFinal.push(arrayHTML);
+              arrayHTMLTeam.push(arrayHTML);
 
             // end read file
             });
@@ -109,6 +109,7 @@ function initiate() {
             //create new intern with intern class
             const newIntern = new intern(data.name, data.id, data.email, data.school);
 
+            //push newIntern to answers array
             arrayAnswers.push(newIntern);
 
             arrayHTML = [];
@@ -127,7 +128,7 @@ function initiate() {
               });
 
               //push updated html into array that will hold all updated html data
-              arrayHTMLFinal.push(arrayHTML);
+              arrayHTMLTeam.push(arrayHTML);
 
             // end read file
             });
@@ -162,7 +163,7 @@ function initiate() {
               });
 
               //push updated html into array final that will hold all updated html data
-              arrayHTMLFinal.push(arrayHTML);
+              arrayHTMLTeam.push(arrayHTML);
             
             });
 
@@ -170,10 +171,12 @@ function initiate() {
           
           if (data.yesorno === false) {
 
+            //run function that creates final team page output
             createTeamPage();
 
           } else {
 
+            //run prompts and array creation for next team member
             initiate();
 
           }
@@ -183,6 +186,7 @@ function initiate() {
 
 }
 
+//function that creates final team page output
 function createTeamPage() {
       
     //read contents the html file
@@ -192,17 +196,17 @@ function createTeamPage() {
         throw err;
       }
 
-      arrayHTMLFinalTemplate.push(data);
+      arrayHTMLFinal.push(data);
 
-      arrayHTMLFinal = arrayHTMLFinal.join('');
+      arrayHTMLTeam = arrayHTMLTeam.join('');
 
       //return the HTML with the placeholders replaced by newEngineer data
-      arrayHTMLFinalTemplate = arrayHTMLFinalTemplate.map(arrayHTMLFinalTemplate => {
-        return arrayHTMLFinalTemplate.replace(/{{ newteam }}/g, arrayHTMLFinal);
+      arrayHTMLFinal = arrayHTMLFinal.map(arrayHTMLFinal => {
+        return arrayHTMLFinal.replace(/{{ newteam }}/g, arrayHTMLTeam);
       });
 
       // write to new file in output folder
-      fs.writeFile("./output/team_index.html", arrayHTMLFinalTemplate, function(err) {
+      fs.writeFile("./output/team_index.html", arrayHTMLFinal, function(err) {
       
         if (err) {
           return console.log(err);
