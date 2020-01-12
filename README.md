@@ -1,8 +1,8 @@
 # teamsprite-site-generator-hw10
 This is a Git Hub repository for the NU Coding Bootcamp Team Site Generator Homework for Week 10.
 
-![profile pdf screenshot](/assets/images/teamsprite.jpg)
-![node js run gif](/assets/images/teamsprite.gif)
+![output page screenshot](/assets/images/teamsprite.jpg)
+![prompts screenshot](/assets/images/teamsprite2.jpg)
 
 # Setup
 
@@ -19,11 +19,9 @@ Also see: [Cloning a repository](https://help.github.com/en/github/creating-clon
 
 The Team Sprite application allows a user to generate a webpage that displays information regarding members of a team based on prompts and stored user inputs using the command-line.
 
-A project manager, department head or developer lead can use the application to generate basic team details quickly for a website that can be referenced by stakeholders or boards without having to navigate to external profiles provided by each team member. 
+A project manager, department head or team lead can use the application to generate basic team details quickly for a website that can be referenced by stakeholders or boards without having to navigate to external profiles provided by each team member. This particular set of profiles is intended to build an engineering team.
 
-***The user will also be able to choose a color that closest matches a project theme - developers may update generateHTML to update colors for company/department branding palette or additional tailoring.***
-
-When the command line prompts are complete, a team.html page will save to "output" folder.
+When the command line prompts are complete, an index.html page will save to "output" folder.
 
 The generated page will include the members of the team and:
 - name
@@ -36,6 +34,7 @@ The generated page will include the members of the team and:
 
 This project was built using:
 
+  - Node
   - [Inquirer 7.0.1](https://www.npmjs.com/package/inquirer)
   - [Jest 24.8.0](https://www.npmjs.com/package/jest)
 

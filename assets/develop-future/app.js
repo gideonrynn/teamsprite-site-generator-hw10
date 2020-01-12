@@ -66,7 +66,7 @@ const questions = [
   {
     type: "input",
     name: "username",
-    message: "Enter GitHub username:",
+    message: "Enter GitHub username (input will link to github site):",
     when: (answers) => answers.type === 'engineer',
     validate: (text) => {
       if (text === "") {
@@ -79,7 +79,7 @@ const questions = [
   {
     type: "input",
     name: "school",
-    message: "Enter name of school:",
+    message: "Enter name of school (will link to google search for school):",
     when: (answers) => answers.type === 'intern',
     validate: (text) => {
       if (text === "") {
@@ -117,15 +117,14 @@ const questions = [
   }
 ];
 
-//not applied in this version of the application
-// const background = [
-//   {
-//     type: "list",
-//     name: "image",
-//     message: "Select your preferred background:",
-//     choices: ["seigaiha", "palmleaf", "sun"]
-//   }
-// ]
+const background = [
+  {
+    type: "list",
+    name: "image",
+    message: "Select your preferred background:",
+    choices: ["seigaiha", "palmleaf", "sun"]
+  }
+]
 
 
 //function runs with node app.js that will prompt users for team info, generate answer and html arrays from html templates
@@ -274,12 +273,41 @@ function createTeamPage() {
         if (err) {
           return console.log(err);
         }
+
+        inquirer.prompt(background)
+
+          .then((answersBKG) => {
+
+            if (background.image === "seigaiha") {
+
+              $("body").css("background", "../assets/images/seigaiha.png/");
+              $("#team").text("check it out");
+
+            }
+
+            if (background.image === "palmleaf") {
+
+              $("body").css("background", "../assets/images/palm-leaf.png/");
+              $("#team").text("check it out");
+
+            }
+
+            if (background.image === "sun") {
+
+              $("body").css("background", "../assets/images/sun-pattern.png/");
+              $("#team").text("check it out");
+
+            }
+
+            console.log(answersBKG);
       
         console.log("Your team page has been created in the 'output' folder!");
       
         });
 
     });
+
+  });
 
 }
 
